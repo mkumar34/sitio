@@ -1,0 +1,80 @@
+name: Deploy Python Files to VM
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'python/**'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "-----BEGIN OPENSSH PRIVATE KEY-----
+        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
+        -----END OPENSSH PRIVATE KEY-----" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+    - name: Add host to known hosts
+      run: ssh-keyscan -H 52.191.166.127 >> ~/.ssh/known_hosts
+      
+    - name: Create destination directory
+      run: |
+        ssh DAK_Kumar@52.191.166.127 "if not exist \"C:\\Users\\DAK_Kumar\\Documents\\GIT_PYTHON\" mkdir \"C:\\Users\\DAK_Kumar\\Documents\\GIT_PYTHON\""
+      
+    - name: Copy Python files
+      run: |
+        scp -r python_files/* DAK_Kumar@52.191.166.127:"C:\\Users\\DAK_Kumar\\Documents\\GIT_PYTHON"
