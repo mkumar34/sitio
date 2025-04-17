@@ -24,7 +24,7 @@ jobs:
     - name: Copy Python files
       run: |
         # Find all Python files and copy them
-        Get-ChildItem -Path "." -Filter "*.py" -Recurse | 
+        Get-ChildItem -Path ".\python_files" -Filter "*.py" -Recurse |
         ForEach-Object {
           $destination = Join-Path "C:\Users\DAK_Kumar\Documents\GIT_PYTHON" $_.Name
           Copy-Item -Path $_.FullName -Destination $destination -Force
