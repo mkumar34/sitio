@@ -69,12 +69,12 @@ jobs:
         -----END OPENSSH PRIVATE KEY-----" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
     - name: Add host to known hosts
-      run: ssh-keyscan -H 10.223.106.19 >> ~/.ssh/known_hosts
+      run: ssh-keyscan -H 52.191.166.127 >> ~/.ssh/known_hosts
       
     - name: Create destination directory
       run: |
-        ssh DAK_Kumar@10.223.106.19 "if not exist \"C:\\Users\\DAK_Kumar\\Documents\\GIT_PYTHON\" mkdir \"C:\\Users\\DAK_Kumar\\Documents\\GIT_PYTHON\""
+        ssh DAK_Kumar@52.191.166.127 "if not exist \"C:\\Users\\DAK_Kumar\\Documents\\GIT_PYTHON\" mkdir \"C:\\Users\\DAK_Kumar\\Documents\\GIT_PYTHON\""
       
     - name: Copy Python files
       run: |
-        scp -r python_files/* DAK_Kumar@10.223.106.19:"C:\\Users\\DAK_Kumar\\Documents\\GIT_PYTHON"
+        scp -r python_files/* DAK_Kumar@52.191.166.127:"C:\\Users\\DAK_Kumar\\Documents\\GIT_PYTHON"
